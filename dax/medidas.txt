@@ -1,0 +1,29 @@
+DEFINE 
+---- MODEL MEASURES BEGIN ----
+MEASURE Medidas[Diferencias precios] = 
+
+SUMX (
+    FILTER (
+        'dev_testeos m_products_mercadona',
+        NOT ISBLANK ( 'dev_testeos m_products_mercadona'[precio actual] ) &&
+        NOT ISBLANK ( 'dev_testeos m_products_mercadona'[precio anterior] )
+    ),
+    VAR actual ='dev_testeos m_products_mercadona'[precio actual]
+    VAR anteriorTxt = 'dev_testeos m_products_mercadona'[precio anterior]
+    VAR anterior =
+        IF (
+            ISNUMBER ( anteriorTxt ),
+            anteriorTxt,
+            ABS(VALUE ( SUBSTITUTE ( TRIM ( anteriorTxt ), ",", "." ) ))
+        )
+    RETURN
+        actual - anterior
+)
+
+
+MEASURE Medidas[Precio Medio] = AVERAGE('dev_testeos m_products_mercadona'[bulk_price])
+MEASURE Medidas[Última modificación] = 
+"Última modificación: " & 
+FORMAT(MAX('dev_testeos m_products_mercadona'[inserted_at]), "dd/mm/yyyy hh:mm:ss")
+
+---- MODEL MEASURES END ----
