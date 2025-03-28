@@ -52,7 +52,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t mercadata-app .
+          docker build -f docker/Dockerfile -t mercadata-app .
 
       - name: Push Docker image to DockerHub
         if: github.ref == 'refs/heads/main'
