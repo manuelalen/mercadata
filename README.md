@@ -1,4 +1,4 @@
-# 🛒 Mercadata: Scraper de productos de Mercadona
+# 🛒 Mercadata: Obtención de productos y precios de Mercadona mediante API
 
 ![Mercadata Banner](images/mercadata.png)
 
