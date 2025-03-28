@@ -1,0 +1,81 @@
+---
+- name: Setup K3s and ArgoCD in DEV
+  hosts: dev_node
+  become: yes
+  vars:
+    namespace: dev
+    path: /home/ubuntu/infra/dev
+  tasks:
+    - name: Install K3s
+      shell: curl -sfL https://get.k3s.io | sh -
+    - name: Wait for K3s
+      pause: { seconds: 20 }
+    - name: Copy infra/dev
+      copy:
+        src: ./infra/dev/
+        dest: "{{ path }}/"
+        owner: ubuntu
+        group: ubuntu
+        mode: "0755"
+    - name: Install ArgoCD and deploy DEV
+      shell: |
+        export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+        kubectl create namespace argocd || true
+        kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+        sleep 30
+        kubectl apply -k {{ path }}
+        kubectl apply -f /home/ubuntu/infra/applications/argocd-app-dev.yaml
+
+- name: Setup K3s and ArgoCD in TEST
+  hosts: test_node
+  become: yes
+  vars:
+    namespace: test
+    path: /home/ubuntu/infra/test
+  tasks:
+    - name: Install K3s
+      shell: curl -sfL https://get.k3s.io | sh -
+    - name: Wait for K3s
+      pause: { seconds: 20 }
+    - name: Copy infra/test
+      copy:
+        src: ./infra/test/
+        dest: "{{ path }}/"
+        owner: ubuntu
+        group: ubuntu
+        mode: "0755"
+    - name: Install ArgoCD and deploy TEST
+      shell: |
+        export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+        kubectl create namespace argocd || true
+        kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+        sleep 30
+        kubectl apply -k {{ path }}
+        kubectl apply -f /home/ubuntu/infra/applications/argocd-app-test.yaml
+
+- name: Setup K3s and ArgoCD in PROD
+  hosts: prod_node
+  become: yes
+  vars:
+    namespace: prod
+    path: /home/ubuntu/infra/prod
+  tasks:
+    - name: Install K3s
+      shell: curl -sfL https://get.k3s.io | sh -
+    - name: Wait for K3s
+      pause: { seconds: 20 }
+    - name: Copy infra/prod
+      copy:
+        src: ./infra/prod/
+        dest: "{{ path }}/"
+        owner: ubuntu
+        group: ubuntu
+        mode: "0755"
+    - name: Install ArgoCD and deploy PROD
+      shell: |
+        export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+        kubectl create namespace argocd || true
+        kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+        sleep 30
+        kubectl apply -k {{ path }}
+        kubectl apply -f /home/ubuntu/infra/applications/argocd-app-prod.yaml
