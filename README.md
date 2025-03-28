@@ -101,3 +101,17 @@ GNU
 ---
 
 
+---
+
+## 📊 Informe PBI
+
+Con esta extracción de datos de la API pretendemos preparar la data para cargarlos en un informe de PBI para completar nuestro proyectod e Data Analyst-Data Engineer. Este sería nuestro informe del que dejamos algunas medidas en en dax/medidas.txt.
+
+El dataset deberá configurarse con las columnas deseadas para mostrar los datos deseados.
+
+![image](https://github.com/user-attachments/assets/5ca283d4-b1e3-4db6-8ad6-a07fb4dc8a6a)
+
+
+---
+
+
