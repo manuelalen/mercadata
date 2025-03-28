@@ -90,16 +90,14 @@ La tabla `m_products_mercadona` incluye los siguientes campos:
 
 ## ✍️ Autor
 
-Desarrollado por [Tu Nombre].
+Desarrollado por Manuel Alén Sánchez.
 
 ---
 
 ## 📄 Licencia
 
-MIT License
+GNU
 
 ---
 
-## ❤️ Agradecimientos
 
-- A Mercadona por permitir el acceso a su API pública para el análisis de productos.
