@@ -1,1 +1,3 @@
 # mercadata
+
+!images/mercadata.png
