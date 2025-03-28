@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mercadata-prod
+  labels:
+    app: mercadata
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mercadata
+  template:
+    metadata:
+      labels:
+        app: mercadata
+    spec:
+      containers:
+        - name: mercadata
+          image: manualen/mercadata-app:latest
+          env:
+            - name: MYSQL_HOST
+              value: "mysql"
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_USER
+              value: "testuser"
+            - name: MYSQL_PASSWORD
+              value: "testpass"
+            - name: MYSQL_DATABASE
+              value: "dev_testeos"
+          ports:
+            - containerPort: 80
