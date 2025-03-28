@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mercadata-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/tu_usuario/tu_repo
+    targetRevision: HEAD
+    path: infra/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
